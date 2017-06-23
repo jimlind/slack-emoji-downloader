@@ -2,8 +2,17 @@
 
 const fs = require('fs');
 const shell = require('child_process');
-const emoji = require('./emoji-1498222566574.json');
-const dirname = "emojiB"
+
+let timestamp = 0;
+fs.readdirSync("./").forEach(function(file) {
+  const result = file.match(/emoji-(\d+).json/);
+  if (result && result[1] > timestamp) {
+    timestamp = result[1];
+  }
+});
+
+const emoji = require(`./emoji-${timestamp}.json`);
+const dirname = `${timestamp}-downloads`;
 
 shell.exec(`mkdir -p "${dirname}"`);
 

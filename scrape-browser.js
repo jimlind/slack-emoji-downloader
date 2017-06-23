@@ -3,7 +3,9 @@
   const emoji = Array.from(rows).map(node => {
     const name = node.children[1].childNodes[0].nodeValue.trim().replace(/:/g, '');
     const url = node.children[0].children[0].dataset.original;
-    return { name, url };
+    const aliasResult = node.children[2].childNodes[0].nodeValue.match(/:([a-z0-9-_])+:/);
+    const alias = aliasResult ? aliasResult[0] : '';
+    return { name, url, alias };
   });
   const json = JSON.stringify(emoji);
   const now = new Date().getTime();
